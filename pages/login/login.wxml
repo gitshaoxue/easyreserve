@@ -1,0 +1,35 @@
+<view class="container">
+  <view class="logo-container">
+    <image class="logo" src="/images/logo.png"></image>
+    <text class="title">会议室预约系统</text>
+  </view>
+
+  <view class="form-container">
+    <view class="form-item">
+      <image class="icon" src="/images/user_icon.png"></image>
+      <input type="text" placeholder="请输入用户名" bindinput="onUsernameInput" value="{{username}}"/>
+    </view>
+    <view class="form-item">
+      <image class="icon" src="/images/password_icon.png"></image>
+      <input type="password" placeholder="请输入密码" bindinput="onPasswordInput" value="{{password}}"/>
+    </view>
+    <view class="form-item">
+      <image class="icon" src="/images/organization_icon.png"></image>
+      <picker bindchange="onOrganizationChange" value="{{organizationIndex}}" range="{{organizations}}">
+        <view class="picker">
+          {{organizations[organizationIndex] || '请选择所属组织'}}
+        </view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <image class="icon" src="/images/enterprise_icon.png"></image>
+      <picker bindchange="onEnterpriseChange" value="{{enterpriseIndex}}" range="{{enterprises}}">
+        <view class="picker">
+          {{enterprises[enterpriseIndex] || '请选择所属企业'}}
+        </view>
+      </picker>
+    </view>
+
+    <button class="button button-primary" bindtap="login">登录</button>
+  </view>
+</view>

@@ -1,0 +1,72 @@
+<view class="container">
+  <view class="user-info">
+    <image class="avatar" src="{{userInfo.avatar}}"></image>
+    <view class="user-details">
+      <text class="user-name">{{userInfo.name}}</text>
+      <text class="user-organization">{{currentOrganization.name}} - {{currentEnterprise.name}}</text>
+    </view>
+  </view>
+
+  <view class="quick-actions">
+    <view class="action-item" bindtap="navigateToReservation">
+      <image class="action-icon" src="/images/reserve_icon.png"></image>
+      <text class="action-text">快速预约</text>
+    </view>
+    <view class="action-item" bindtap="navigateToMeetingRooms">
+      <image class="action-icon" src="/images/room_icon.png"></image>
+      <text class="action-text">会议室列表</text>
+    </view>
+    <view class="action-item" bindtap="navigateToMyReservations">
+      <image class="action-icon" src="/images/my_reservation_icon.png"></image>
+      <text class="action-text">我的预约</text>
+    </view>
+    <view class="action-item" bindtap="navigateToScan">
+      <image class="action-icon" src="/images/scan_icon.png"></image>
+      <text class="action-text">扫码签到</text>
+    </view>
+  </view>
+
+  <view class="upcoming-meetings">
+    <view class="section-title">
+      <text>近期会议</text>
+      <text class="more" bindtap="navigateToMyReservations">更多</text>
+    </view>
+    <view class="meeting-list">
+      <block wx:for="{{upcomingMeetings}}" wx:key="id">
+        <view class="meeting-item" bindtap="navigateToMeetingDetail" data-id="{{item.id}}">
+          <view class="meeting-time">
+            <text class="date">{{item.date}}</text>
+            <text class="time">{{item.time}}</text>
+          </view>
+          <view class="meeting-info">
+            <text class="meeting-title">{{item.title}}</text>
+            <text class="meeting-room">{{item.room}}</text>
+          </view>
+          <view class="meeting-status {{item.status}}">{{item.statusText}}</view>
+        </view>
+      </block>
+      <view class="no-data" wx:if="{{upcomingMeetings.length === 0}}">
+        <text>暂无近期会议</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="available-rooms">
+    <view class="section-title">
+      <text>可用会议室</text>
+      <text class="more" bindtap="navigateToMeetingRooms">更多</text>
+    </view>
+    <view class="room-list">
+      <block wx:for="{{availableRooms}}" wx:key="id">
+        <view class="room-item" bindtap="navigateToRoomDetail" data-id="{{item.id}}">
+          <text class="room-name">{{item.name}}</text>
+          <text class="room-capacity">容量: {{item.capacity}}人</text>
+          <text class="room-status available">空闲</text>
+        </view>
+      </block>
+      <view class="no-data" wx:if="{{availableRooms.length === 0}}">
+        <text>暂无可用会议室</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,67 @@
+<view class="container">
+  <view class="search-bar">
+    <view class="search-input">
+      <image class="search-icon" src="/images/search_icon.png"></image>
+      <input type="text" placeholder="搜索会议室" bindinput="onSearchInput" value="{{searchKeyword}}"/>
+    </view>
+    <view class="filter-btn" bindtap="openFilter">
+      <image class="filter-icon" src="/images/filter_icon.png"></image>
+      <text>筛选</text>
+    </view>
+  </view>
+
+  <view class="filter-bar" wx:if="{{showFilter}}">
+    <view class="filter-item">
+      <text class="filter-label">容量:</text>
+      <view class="filter-options">
+        <text class="filter-option {{capacityFilter === '' ? 'active' : ''}}" bindtap="onCapacityFilterChange" data-value="">全部</text>
+        <text class="filter-option {{capacityFilter === 'small' ? 'active' : ''}}" bindtap="onCapacityFilterChange" data-value="small">≤4人</text>
+        <text class="filter-option {{capacityFilter === 'medium' ? 'active' : ''}}" bindtap="onCapacityFilterChange" data-value="medium">5-10人</text>
+        <text class="filter-option {{capacityFilter === 'large' ? 'active' : ''}}" bindtap="onCapacityFilterChange" data-value="large">≥11人</text>
+      </view>
+    </view>
+    <view class="filter-item">
+      <text class="filter-label">状态:</text>
+      <view class="filter-options">
+        <text class="filter-option {{statusFilter === '' ? 'active' : ''}}" bindtap="onStatusFilterChange" data-value="">全部</text>
+        <text class="filter-option {{statusFilter === 'available' ? 'active' : ''}}" bindtap="onStatusFilterChange" data-value="available">空闲</text>
+        <text class="filter-option {{statusFilter === 'busy' ? 'active' : ''}}" bindtap="onStatusFilterChange" data-value="busy">占用</text>
+        <text class="filter-option {{statusFilter === 'maintaining' ? 'active' : ''}}" bindtap="onStatusFilterChange" data-value="maintaining">维护中</text>
+      </view>
+    </view>
+    <view class="filter-item">
+      <text class="filter-label">设备:</text>
+      <view class="filter-options">
+        <text class="filter-option {{equipmentFilter.includes('projector') ? 'active' : ''}}" bindtap="onEquipmentFilterChange" data-value="projector">投影仪</text>
+        <text class="filter-option {{equipmentFilter.includes('whiteboard') ? 'active' : ''}}" bindtap="onEquipmentFilterChange" data-value="whiteboard">白板</text>
+        <text class="filter-option {{equipmentFilter.includes('video') ? 'active' : ''}}" bindtap="onEquipmentFilterChange" data-value="video">视频会议</text>
+        <text class="filter-option {{equipmentFilter.includes('audio') ? 'active' : ''}}" bindtap="onEquipmentFilterChange" data-value="audio">音响</text>
+      </view>
+    </view>
+    <view class="filter-actions">
+      <button class="button button-default" bindtap="resetFilter">重置</button>
+      <button class="button button-primary" bindtap="confirmFilter">确认</button>
+    </view>
+  </view>
+
+  <view class="room-list">
+    <block wx:for="{{meetingRooms}}" wx:key="id">
+      <view class="room-item" bindtap="navigateToRoomDetail" data-id="{{item.id}}">
+        <view class="room-info">
+          <text class="room-name">{{item.name}}</text>
+          <text class="room-capacity">容量: {{item.capacity}}人</text>
+          <text class="room-location">位置: {{item.location}}</text>
+          <view class="room-equipment">
+            <block wx:for="{{item.equipment}}" wx:key="*this" wx:for-item="eq">
+              <text class="equipment-tag">{{eq}}</text>
+            </block>
+          </view>
+        </view>
+        <view class="room-status {{item.status}}">{{item.statusText}}</view>
+      </view>
+    </block>
+    <view class="no-data" wx:if="{{meetingRooms.length === 0}}">
+      <text>暂无符合条件的会议室</text>
+    </view>
+  </view>
+</view>
